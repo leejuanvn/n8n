@@ -212,8 +212,15 @@ backup_manual() {
     return 1
   fi
 
+  # Lấy user PostgreSQL từ file db-credentials.txt
+  PG_USER=$(grep '^User:' "$N8N_DIR/db-credentials.txt" | awk '{print $2}')
+  if [ -z "$PG_USER" ]; then
+    echo "Không lấy được user PostgreSQL từ file db-credentials.txt"
+    return 1
+  fi
+
   backup_file="$BACKUP_DIR/n8n_backup_${timestamp}.sql"
-  docker exec -t "$container_id" pg_dumpall -c -U $(grep ^POSTGRES_USER= $N8N_DIR/docker-compose.yml | cut -d= -f2) > "$backup_file"
+  docker exec -t "$container_id" pg_dumpall -c -U "$PG_USER" > "$backup_file"
   if [ $? -eq 0 ]; then
     echo "Backup thành công: $backup_file"
   else
