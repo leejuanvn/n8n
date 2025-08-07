@@ -157,7 +157,7 @@ mkdir -p "$BACKUP_DIR"
 show_menu() {
   clear
   echo "======================================"
-  echo "         QUẢN LÝ N8N PLATFORM         "
+  echo "      QUẢN LÝ N8N BY HỒNG TUÂN        "
   echo "======================================"
   echo "1) Cập nhật n8n"
   echo "2) Khởi động lại n8n"
